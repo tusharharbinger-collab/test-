@@ -4,10 +4,20 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from fastapi.testclient import TestClient
+from faker import Faker
 
 import main
 
 client = TestClient(main.app)
+fake = Faker()
+
+
+def test_faker_is_actually_installed_from_this_repos_own_requirements():
+    """Proves tests run in a real per-repo virtualenv, not pipeline-worker's
+    own environment — pipeline-worker never installs `faker`, so this only
+    passes if this repo's OWN requirements.txt was actually installed."""
+    name = fake.name()
+    assert isinstance(name, str) and len(name) > 0
 
 
 def test_healthz_reports_healthy_with_version_and_cohort():
