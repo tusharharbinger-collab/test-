@@ -1,6 +1,6 @@
 runtime: python
 startCommand: "python main.py"
-testCommand: "pytest tests/ -v"
+testCommand: "pytest nodocker/tests/ -v"
 
 deploy:
   target: kubernetes
